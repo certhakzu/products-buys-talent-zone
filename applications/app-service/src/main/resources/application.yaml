@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "InventarioProducts"
+  devtools:
+    add-properties: false
+  h2:
+    console:
+      enabled: true
+      path: "/h2"
+  profiles:
+    include: null
+  data:
+    mongodb:
+      uri: "mongodb+srv://certhakzu:mongoPrueba123@cluster0-prueba.kuwmb.mongodb.net/?retryWrites=true&w=majority"
+      database: "inventario-de-productos"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
