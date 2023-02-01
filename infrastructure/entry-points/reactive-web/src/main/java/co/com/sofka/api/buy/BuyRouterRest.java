@@ -13,8 +13,11 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 public class BuyRouterRest {
 @Bean
 public RouterFunction<ServerResponse> buyRouterFunction(BuyHandler buyHandler) {
-    return route(POST("/api/buy/create"), buyHandler::listenPOSTCreateBuyUseCase);
-    //.andRoute(POST("/api/usecase/otherpath"), handler::listenPOSTUseCase).and(route(GET("/api/otherusercase/path"), handler::listenGETOtherUseCase));
+    return route(POST("/api/buy/create"), buyHandler::listenPOSTCreateBuyUseCase)
+            .andRoute(GET("/api/buy/findall"), buyHandler::listenGETFindAllBuysUseCase)
+            .andRoute(GET("/api/buy/findbyid/{id}"), buyHandler::listenGETFindBuyByIdUseCase)
+            .andRoute(DELETE("/api/buy/delete/{id}"), buyHandler::listenDELETEDeleteBuyUseCase)
+            .andRoute(PUT("/api/buy/update/{id}"), buyHandler::listenPUTUpdateBuyUseCase);
 
     }
 }

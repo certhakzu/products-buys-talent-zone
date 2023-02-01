@@ -10,7 +10,7 @@ public class FindProductByIdUseCase {
 
     private final ProductRepository productRepository;
 
-    public Mono<Product> findById(String id){
+    public Mono<Product> findProductById(String id){
         return productRepository.findById(id);
     }
 }

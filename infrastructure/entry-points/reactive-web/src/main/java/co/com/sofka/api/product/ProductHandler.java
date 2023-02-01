@@ -50,7 +50,7 @@ public class ProductHandler {
         var id = serverRequest.pathVariable("id");
         return ServerResponse.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(findProductByIdUseCase.findById(id), Product.class);
+                .body(findProductByIdUseCase.findProductById(id), Product.class);
     }
 
     public Mono<ServerResponse> listenPUTUpdateProductUseCase(ServerRequest serverRequest){

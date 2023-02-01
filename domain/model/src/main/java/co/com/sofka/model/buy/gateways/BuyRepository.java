@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 public interface BuyRepository {
     Mono<Buy> save(Buy buy);
     Flux<Buy> findAll();
-    //Mono<Buy> findById();
-    //Mono<Buy> update(String id, Buy buy);
+    Mono<Buy> findById(String id);
+    Mono<Buy> update(String id, Buy buy);
     Mono<Void> deleteById(String id);
 }
