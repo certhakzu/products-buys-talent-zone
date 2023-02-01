@@ -1,4 +1,4 @@
-package co.com.sofka.usecase.findallproducts;
+package co.com.sofka.usecase.product.findallproducts;
 
 import co.com.sofka.model.product.Product;
 import co.com.sofka.model.product.gateways.ProductRepository;

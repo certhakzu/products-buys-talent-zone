@@ -1,11 +1,11 @@
-package co.com.sofka.api;
+package co.com.sofka.api.product;
 
 import co.com.sofka.model.product.Product;
-import co.com.sofka.usecase.createproduct.CreateProductUseCase;
-import co.com.sofka.usecase.deleteproduct.DeleteProductUseCase;
-import co.com.sofka.usecase.findallproducts.FindAllProductsUseCase;
-import co.com.sofka.usecase.findproductbyid.FindProductByIdUseCase;
-import co.com.sofka.usecase.updateproduct.UpdateProductUseCase;
+import co.com.sofka.usecase.product.createproduct.CreateProductUseCase;
+import co.com.sofka.usecase.product.deleteproduct.DeleteProductUseCase;
+import co.com.sofka.usecase.product.findallproducts.FindAllProductsUseCase;
+import co.com.sofka.usecase.product.findproductbyid.FindProductByIdUseCase;
+import co.com.sofka.usecase.product.updateproduct.UpdateProductUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -26,8 +26,7 @@ public class ProductHandler {
     public Mono<ServerResponse> listenPOSTCreateProductUseCase(ServerRequest serverRequest) {
 
         return serverRequest.bodyToMono(Product.class)
-                .flatMap(product -> ServerResponse
-                        .ok()
+                .flatMap(product -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(createProductUseCase.createProduct(product), Product.class));
     }

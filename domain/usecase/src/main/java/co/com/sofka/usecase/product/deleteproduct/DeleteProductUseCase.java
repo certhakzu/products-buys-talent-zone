@@ -1,4 +1,4 @@
-package co.com.sofka.usecase.deleteproduct;
+package co.com.sofka.usecase.product.deleteproduct;
 
 import co.com.sofka.model.product.gateways.ProductRepository;
 import lombok.RequiredArgsConstructor;
