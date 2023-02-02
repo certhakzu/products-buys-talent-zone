@@ -11,4 +11,5 @@ public interface ProductRepository {
     Mono<Product> findById(String id);
     Mono<Void> deleteById(String id);
     Mono<Product> update(String id, Product product);
+    //Flux<Product> pageBy(Integer amount);
 }

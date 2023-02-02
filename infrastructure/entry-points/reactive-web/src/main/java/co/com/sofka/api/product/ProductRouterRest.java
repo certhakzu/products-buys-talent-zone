@@ -15,7 +15,7 @@ public class ProductRouterRest {
 public RouterFunction<ServerResponse> productRouterFunction(ProductHandler productHandler) {
     return route(POST("/api/product/create"), request -> productHandler.listenPOSTCreateProductUseCase(request))
             .andRoute(GET("/api/product/findall"), productHandler::listenGETFindAllProductsUseCase)
-            .andRoute(DELETE("/api/product/deletebyid/{id}"), productHandler::listenDELETEDeleteProductByIdUseCase)
+            .andRoute(DELETE("/api/product/delete/{id}"), productHandler::listenDELETEDeleteProductByIdUseCase)
             .andRoute(GET("/api/product/findbyid/{id}"), productHandler::listenGETFindProductByIdUseCase)
             .andRoute(PUT("/api/product/update/{id}"), productHandler::listenPUTUpdateProductUseCase);
 
