@@ -7,6 +7,8 @@ import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 
 @Repository
 public class ProductMongoRepositoryAdapter extends AdapterOperations<Product, ProductDocument, String, ProductMongoDBRepository>
@@ -27,5 +29,14 @@ implements ProductRepository
                 product.getMin(),
                 product.getMax()
         )).flatMap(productDocument -> Mono.just(product));
+    }
+
+    @Override
+    public Mono<Boolean> findByName(String name) {
+        return repository.findAll()
+                .map(product -> product.getName().equalsIgnoreCase(name))
+                .filter(aBoolean -> aBoolean.equals(Boolean.TRUE))
+                .reduce((aBoolean, aBoolean2) -> aBoolean || aBoolean2)
+                .defaultIfEmpty(Mono.just(Boolean.FALSE).block());
     }
 }

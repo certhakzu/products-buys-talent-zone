@@ -11,6 +11,6 @@ public class FindAllBuysUseCase {
     private final BuyRepository buyRepository;
 
     public Flux<Buy> findAllBuys(){
-        return buyRepository.findAll();
+        return buyRepository.findAll().log("Elemento ");
     }
 }

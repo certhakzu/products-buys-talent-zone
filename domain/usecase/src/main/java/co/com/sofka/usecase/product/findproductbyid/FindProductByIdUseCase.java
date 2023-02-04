@@ -11,6 +11,7 @@ public class FindProductByIdUseCase {
     private final ProductRepository productRepository;
 
     public Mono<Product> findProductById(String id){
-        return productRepository.findById(id);
+        return productRepository.findById(id)
+                .onErrorContinue((throwable, o) -> System.out.println("ERROR: " + throwable.getMessage()));
     }
 }
