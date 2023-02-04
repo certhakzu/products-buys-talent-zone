@@ -13,4 +13,5 @@ public interface ProductRepository {
     Mono<Product> update(String id, Product product);
     //Flux<Product> pageBy(Integer amount);
     Mono<Boolean> findByName(String name);
+    Mono<Boolean> isExists(String id);
 }

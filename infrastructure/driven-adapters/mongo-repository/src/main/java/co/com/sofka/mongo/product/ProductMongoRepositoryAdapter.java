@@ -39,4 +39,9 @@ implements ProductRepository
                 .reduce((aBoolean, aBoolean2) -> aBoolean || aBoolean2)
                 .defaultIfEmpty(Mono.just(Boolean.FALSE).block());
     }
+
+    @Override
+    public Mono<Boolean> isExists(String id) {
+        return repository.existsById(id);
+    }
 }
