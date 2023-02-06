@@ -16,18 +16,16 @@ public class UpdateProductUseCase {
 
     public Mono<Product> updateProduct(String id, Product product){
 
-        var isValid = (product.getInInventory() < 0) || (product.getMin() >= product.getMax());
+        var isValid = (product.getInInventory() >= 0) && (product.getMin() <= product.getMax()); // falta validacion de tipos de datos
 
         var valid = Flux.merge(productRepository.isExists(id), Mono.just(isValid));
 
                      // comprueba si no existe o si los datos no son validos
         return valid.filter(aBoolean -> aBoolean.equals(Boolean.FALSE))
                 .doOnNext(aBoolean -> logger.log(Level.INFO, "ELEMENTO: ".concat(String.valueOf(aBoolean))))
-                .switchIfEmpty(valid1 -> { // si el filter devuelte un VACIO significa que el elemento si existe y es valido
-                    productRepository.update(id, product);
-                }).map(aBoolean -> Mono.just(product))
+                .flatMap(aBoolean -> Mono.just(product))
                 .reduce((productMono, productMono2) -> productMono)
-                .flatMap(productMono -> productMono)
+                .switchIfEmpty(productRepository.update(id, product))
                 .log();
     }
 }

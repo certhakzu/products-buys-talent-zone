@@ -22,15 +22,6 @@ public class Buy {
     private String clientName;
     private ArrayList<BuyProducts> buyProducts;
 
-/*    public Buy(String idBuy, Instant.now(), String idType, String id, String clientName, ArrayList<BuyProducts> buyProducts) {
-        this.idBuy = idBuy;
-        this.date = date;
-        this.idType = idType;
-        this.id = id;
-        this.clientName = clientName;
-        this.buyProducts = buyProducts;
-    }
-*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
