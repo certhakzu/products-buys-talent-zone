@@ -39,7 +39,7 @@ public class CreateBuyUseCase {
                 //realizar la compra o no
                 .flatMap(aBoolean -> {
                     if (aBoolean){
-                        discountStock(buy.getBuyProducts());
+                        Mono.empty().mergeWith(discountStock(buy.getBuyProducts()));
                         return buyRepository.save(buy).log("Buy CREADA!");
                     } else {
                         return Mono.just(buy).log("No se creó la COMPRA!");
@@ -83,12 +83,16 @@ public class CreateBuyUseCase {
 
     private Mono<Void> discountStock(ArrayList<BuyProducts> buyProducts){
         return Flux.fromIterable(buyProducts)
+                .log("ITERABLE CREADO!!!")
                 .flatMap(buyProduct -> {
                     var product = productRepository.findById(buyProduct.getIdProduct()).block();
                     product.setInInventory(product.getInInventory() - buyProduct.getQuantity());
-                    productRepository.update(product.getId(), product);
+                    productRepository.update(buyProduct.getIdProduct(), product)
+                            .log("PRODUCTO DESCONTADO Y ACTUALIZADO");
                     return Mono.just(product);
-                }).flatMap(product -> Mono.empty()).then();
+                })
+                .log("POST Actualizacion de las unidades de los productos!")
+                .flatMap(product -> Mono.empty()).then();
     }
 
 }
