@@ -7,7 +7,6 @@ import org.reactivecommons.utils.ObjectMapper;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,5 +74,17 @@ implements ProductRepository
                 .map(productDocument -> productDocument.getInInventory() >= amount)
                 .filter(aBoolean -> aBoolean.equals(Boolean.TRUE))
                 .switchIfEmpty(Mono.just(Boolean.FALSE));
+    }
+
+    @Override
+    public Mono<Product> discount(String id, Integer amount) {
+        return repository.findById(id)
+                .map(productDocument -> new Product(productDocument.getId(),
+                        productDocument.getName(),
+                        productDocument.getInInventory() - amount,
+                        productDocument.getEnabled(),
+                        productDocument.getMin(),
+                        productDocument.getMax()))
+                .flatMap(product -> update(product.getId(), product)).log("PRODUCTO EDITADO");
     }
 }

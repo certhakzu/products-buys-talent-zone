@@ -3,7 +3,9 @@ package co.com.sofka.usecase.buy.createbuy;
 import co.com.sofka.model.buy.Buy;
 import co.com.sofka.model.buy.BuyProducts;
 import co.com.sofka.model.buy.gateways.BuyRepository;
+import co.com.sofka.model.product.Product;
 import co.com.sofka.model.product.gateways.ProductRepository;
+import co.com.sofka.usecase.product.updateproduct.UpdateProductUseCase;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -11,6 +13,7 @@ import reactor.core.publisher.Mono;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +21,7 @@ import java.util.logging.Logger;
 public class CreateBuyUseCase {
     private final BuyRepository buyRepository;
     private final ProductRepository productRepository;
+    private final UpdateProductUseCase updateProductUseCase;
     private static final Logger logger = Logger.getLogger("co.com.sofka.usecase.product.underproduction.CreateBuyUseCase");
 
     public Mono<Buy> createBuy(Buy buy) {
@@ -33,18 +37,13 @@ public class CreateBuyUseCase {
          * * Si se cumplen las dos anteriores, se debe crear la compra y reducir las unidades que se compraron
          * */
 
-        return  Mono.zip(isIdTypeValid(buy.getIdType()), areEnabled(buy.getBuyProducts()), areStocks(buy.getBuyProducts()))
+        //discountStock(buy).log("EJECUTANDO DESCUENTOS DE UNIDADES");
+
+        return   Mono.zip(isIdTypeValid(buy.getIdType()), areEnabled(buy.getBuyProducts()), areStocks(buy.getBuyProducts()))
                 // verificar que sea comprable
                 .map(objects -> objects.getT1() && objects.getT2() && objects.getT3())
                 //realizar la compra o no
-                .flatMap(aBoolean -> {
-                    if (aBoolean){
-                        Mono.empty().mergeWith(discountStock(buy.getBuyProducts()));
-                        return buyRepository.save(buy).log("Buy CREADA!");
-                    } else {
-                        return Mono.just(buy).log("No se creó la COMPRA!");
-                    }
-                });
+                .flatMap(itISPurchasable -> itISPurchasable? buyRepository.save(buy).log("Compra Creada!") : Mono.just(buy).log("No se creó la COMPRA!"));
     }
 
     private Mono<Boolean> isIdTypeValid(String idType){
@@ -81,18 +80,25 @@ public class CreateBuyUseCase {
                 .switchIfEmpty(Mono.just(Boolean.TRUE));*/
     }
 
-    private Mono<Void> discountStock(ArrayList<BuyProducts> buyProducts){
-        return Flux.fromIterable(buyProducts)
-                .log("ITERABLE CREADO!!!")
-                .flatMap(buyProduct -> {
-                    var product = productRepository.findById(buyProduct.getIdProduct()).block();
-                    product.setInInventory(product.getInInventory() - buyProduct.getQuantity());
-                    productRepository.update(buyProduct.getIdProduct(), product)
-                            .log("PRODUCTO DESCONTADO Y ACTUALIZADO");
-                    return Mono.just(product);
-                })
-                .log("POST Actualizacion de las unidades de los productos!")
-                .flatMap(product -> Mono.empty()).then();
+    private Mono<Buy> discountStock(Buy buy){
+        var o = Flux.fromIterable(buy.getBuyProducts())
+                .flatMap(buyProducts -> {
+                    var product = productRepository.findById(buyProducts.getIdProduct());
+                    product.map(product1 -> {
+                        var p = new Product(product1.getId(),
+                                product1.getName(),
+                                product1.getInInventory() - buyProducts.getQuantity(),
+                                product1.getEnabled(),
+                                product1.getMin(),
+                                product1.getMax());
+                        return p;
+                    });
+                    updateProductUseCase.updateProduct(buyProducts.getIdProduct(), Objects.requireNonNull(product.block()));
+                    return product;
+                }).reduce((product, product2) -> product)
+                .flatMap(product -> Mono.just(buy));
+
+        return o;
     }
 
 }

@@ -11,10 +11,10 @@ public interface ProductRepository {
     Mono<Product> findById(String id);
     Mono<Void> deleteById(String id);
     Mono<Product> update(String id, Product product);
-    //Flux<Product> pageBy(Integer amount);
     Mono<Boolean> findByName(String name);
     Mono<Boolean> isExists(String id);
     Mono<Boolean> isEnabled(String id);
 
     Mono<Boolean> haveStocks(String id, Integer amount);
+    Mono<Product> discount(String id, Integer amount);
 }
