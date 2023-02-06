@@ -1,4 +1,4 @@
-package co.com.sofka.usecase.findallproducts;
+package co.com.sofka.usecase.product.findallproducts;
 
 import co.com.sofka.model.product.Product;
 import co.com.sofka.model.product.gateways.ProductRepository;
@@ -10,6 +10,7 @@ public class FindAllProductsUseCase {
     private final ProductRepository productRepository;
 
     public Flux<Product> findAllProducts(){
-        return productRepository.findAll();
+        return productRepository.findAll()
+                .onErrorContinue((throwable, o) -> System.out.println("ERROR: " + throwable.getMessage()));
     }
 }

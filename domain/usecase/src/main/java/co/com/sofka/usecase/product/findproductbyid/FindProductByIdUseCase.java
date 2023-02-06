@@ -1,4 +1,4 @@
-package co.com.sofka.usecase.findproductbyid;
+package co.com.sofka.usecase.product.findproductbyid;
 
 import co.com.sofka.model.product.Product;
 import co.com.sofka.model.product.gateways.ProductRepository;
@@ -10,7 +10,8 @@ public class FindProductByIdUseCase {
 
     private final ProductRepository productRepository;
 
-    public Mono<Product> findById(String id){
-        return productRepository.findById(id);
+    public Mono<Product> findProductById(String id){
+        return productRepository.findById(id)
+                .onErrorContinue((throwable, o) -> System.out.println("ERROR: " + throwable.getMessage()));
     }
 }
