@@ -1,0 +1,272 @@
+{
+	"info": {
+		"_postman_id": "fe12b1bd-cbd1-40a3-869a-79651c8a598f",
+		"name": "ProductosCompras",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17899063"
+	},
+	"item": [
+		{
+			"name": "Compras",
+			"item": [
+				{
+					"name": "Find All Buys",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/buy/findall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"buy",
+								"findall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Buy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/buy/findbyid/63d9e1dcfa6e6561667f067a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"buy",
+								"findbyid",
+								"63d9e1dcfa6e6561667f067a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Buy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"idType\": \"PAP\",\r\n\t\"id\": \"1\",\r\n\t\"clientName\": \"PITER\",\r\n\t\"buyProducts\": [\r\n        {\"idProduct\": \"63dbddaea8879150a52c7595\", \"quantity\": 150}\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/buy/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"buy",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Buy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"date\": \"2023-02-01T01:33:21.518+00:00\",\r\n    \"idType\": \"TI\",\r\n    \"id\": \"10989878799\",\r\n    \"clientName\": \"Joy\",\r\n    \"buyProducts\": [{\"idProduct\": \"2\",\"quantity\": 150}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/buy/update/63d9e1dcfa6e6561667f067a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"buy",
+								"update",
+								"63d9e1dcfa6e6561667f067a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Buy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/buy/delete/63e16663775fc92a329a695a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"buy",
+								"delete",
+								"63e16663775fc92a329a695a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos",
+			"item": [
+				{
+					"name": "Find All Products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/product/findall",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"findall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/product/findbyid/63dbddaea8879150a52c7595",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"findbyid",
+								"63dbddaea8879150a52c7595"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Producto3000\",\r\n\t\"inInventory\": 200,\r\n\t\"enabled\": false,\r\n\t\"min\": 2,\r\n\t\"max\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/product/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Producto30\",\r\n    \"inInventory\": 200,\r\n    \"enabled\": true,\r\n    \"min\": 2,\r\n    \"max\": 200\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/product/update/63dbddaea8879150a52c7595",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"update",
+								"63dbddaea8879150a52c7595"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/product/delete/63de8558d4b99a32d0bc76aa",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"product",
+								"delete",
+								"63de8558d4b99a32d0bc76aa"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
