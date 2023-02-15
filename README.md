@@ -1,5 +1,11 @@
 # Reto Backend Talent Zone Productos-Compras
 
+## Swagger:
+
+Entre al link siguiente cuando tenga el proyecto ejecutando:
+
+http://localhost:8080/swagger-doc/webjars/swagger-ui/index.html
+
 ## Instrucciones:
 
 * Para ejecutar y probar el proyecto, descarque o clone la rama 'main' del repositorio https://github.com/certhakzu/products-buys-talent-zone.git
