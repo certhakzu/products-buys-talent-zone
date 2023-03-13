@@ -1,6 +1,6 @@
 package co.com.sofka.api.product;
 
-import co.com.sofka.api.buy.BuyHandler;
+
 import co.com.sofka.model.buy.Buy;
 import co.com.sofka.model.product.Product;
 import io.swagger.v3.oas.annotations.Operation;
